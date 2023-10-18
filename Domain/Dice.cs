@@ -8,7 +8,7 @@ internal class Dice
 
     internal Dice()
     {
-        throw new NotImplementedException();
+        Dots = 6;
     }
 
     internal void Roll()
