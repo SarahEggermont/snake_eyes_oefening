@@ -8,8 +8,37 @@
     <Dice Pips="@_game.Eye2"/>
 </div>
 <p>Score: @_game.Total</p>
-<button @onclick="_game.Play">Play</button>
+<button class="btn btn-dark" disabled="@_game.HasSnakeEyes" @onclick="@_game.Play">Play</button>
+@if (!_game.HasSnakeEyes)
+{
+    <button class="btn btn-dark" @onclick="@Cheat">Cheat</button>
+}
+
+<h2>High scores</h2>
+<ul>
+    @foreach (var hs in _game.Highscores.OrderByDescending(x => x))
+    {
+        <li>@hs</li>
+    }
+</ul>
+@if (_game.HasSnakeEyes)
+{
+    <div class="alert alert-danger" role="alert">
+        Oops you dit it again!
+    </div>
+    <button class="btn btn-dark" @onclick="@_game.Restart">Restart</button>
+}
 
 @code{
     private Game _game = new Game();
+
+    void Cheat()
+    {
+        do
+        {
+            _game.Play();
+        } while (!_game.HasSnakeEyes);
+    }
+
+
 }
